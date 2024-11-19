@@ -1,0 +1,85 @@
+//Este código consta de cinco secciones principales, cada una diseñada para calcular los puntos totales de un equipo o todos los equipos, dependiendo del contexto de la visualización:
+
+// 1. Cálculo de Puntos por Partidos Ganados (PuntosGanados)
+// En esta sección, se calculan los puntos obtenidos por un equipo específico al ganar partidos.
+// Se multiplica por 3 el número de partidos ganados en los que el equipo seleccionado fue local y anotó más goles que el visitante, o fue visitante y anotó más goles que el local.
+// Este cálculo aplica cuando hay un solo equipo en el contexto actual (filtro específico).
+
+// 2. Cálculo de Puntos por Partidos Empatados (PuntosEmpatados)
+// Aquí se calculan los puntos obtenidos por un equipo específico al empatar partidos.
+// Se cuenta la cantidad de partidos empatados en los que el equipo seleccionado participó, ya sea como local o visitante.
+// Cada empate otorga 1 punto. Esta sección también opera en un contexto filtrado para un solo equipo.
+
+// 3. Cálculo de Puntos Totales por Partidos Ganados para Todos los Equipos (TotalPuntosGanados)
+// Esta sección amplía el cálculo de victorias para un contexto sin filtros específicos, es decir, considerando todos los equipos.
+// Similar a PuntosGanados, pero se asegura de sumar los puntos por victorias de cualquier equipo presente en la tabla ResumenGoles.
+
+// 4. Cálculo de Puntos Totales por Partidos Empatados para Todos los Equipos (TotalPuntosEmpatados)
+// Este cálculo considera todos los equipos para sumar puntos por empates.
+// Similar a PuntosEmpatados, pero aplica a todos los equipos en lugar de un único equipo filtrado.
+
+// 5. Devolución del Resultado Final (RETURN)
+// La última sección combina los cálculos anteriores y devuelve el total de puntos dependiendo del contexto:
+// Si solo un equipo está en el contexto (HASONEVALUE), suma PuntosGanados y PuntosEmpatados.
+// Si todos los equipos están en el contexto, utiliza TotalPuntosGanados y TotalPuntosEmpatados.
+// Esto garantiza que la medida funcione correctamente tanto en visualizaciones detalladas por equipo como en resúmenes globales.
+
+Puntos Totales = 
+VAR PuntosGanados =                                                               // Variable que calcula puntos por victorias (3 puntos por partido ganado)
+    3 * CALCULATE(
+        COUNTROWS(Files),                                                                                                       // Cuenta la cantidad de partidos ganados
+        (
+            (Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                             // Si el equipo es local y ganó
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) >                                // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))))  // Goles del visitante
+        ) ||
+        (
+            Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                              // Si el equipo es visitante y ganó
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) > // Goles del visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1))                                  // Goles del local
+        )
+    )
+
+VAR PuntosEmpatados =                                                            // Variable que calcula puntos por empates (1 punto por partido empatado)
+    CALCULATE(
+        COUNTROWS(Files),  // Cuenta la cantidad de partidos empatados
+        (
+            (Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) ||                                                            // Si el equipo es local
+            Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo])) &&                                                            // O si el equipo es visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) =                               // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time])))  // Igual a goles del visitante
+        )
+    )
+
+VAR TotalPuntosGanados =                                                         // Variable para calcular puntos por victorias
+    3 * CALCULATE(
+        COUNTROWS(Files),                                                                                                      // Cuenta partidos ganados considerando múltiples equipos
+        (
+            (Files[Team 1] IN VALUES(ResumenGoles[Equipo]) &&                                                                  // Si el equipo es local y ganó
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) >                               // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time])))) // Goles del visitante
+        ) ||
+        (
+            Files[Team 2] IN VALUES(ResumenGoles[Equipo]) &&                                                                   // Si el equipo es visitante y ganó
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) >// Goles del visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1))                                 // Goles del local
+        )
+    )
+
+VAR TotalPuntosEmpatados =                                                      // Variable para calcular puntos por empates
+    CALCULATE(
+        COUNTROWS(Files),                                                                                                      // Cuenta partidos empatados considerando múltiples equipos
+        (
+            (Files[Team 1] IN VALUES(ResumenGoles[Equipo]) ||                                                                  // Si el equipo es local
+            Files[Team 2] IN VALUES(ResumenGoles[Equipo])) &&                                                                  // O si el equipo es visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) =                               // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time])))  // Igual a goles del visitante
+        )
+    )
+
+RETURN                                                                        // Devolución del valor
+    IF(
+        HASONEVALUE(ResumenGoles[Equipo]),              // Si se calcula para un solo equipo
+        PuntosGanados + PuntosEmpatados,                // Suma puntos por victorias y empates
+        TotalPuntosGanados + TotalPuntosEmpatados       // Suma total de puntos para múltiples equipos
+    )
