@@ -1,0 +1,44 @@
+// A efectos prácticos, tomar GolesX como los goles marcados por equipo local y GolesY como los goles marcados por equipo visitante
+// Por ejemplo, si un partido terminó "2-1", GolesX representa la primera parte del resultado (2) y GolesY, la segunda (1).
+// De igual modo, tomar Team1 como equipo local y Team2 como equipo visitante.
+
+// Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de local (Team 1)
+Tabla_GolesXTeam1 =                                                                                 // Nombre de la métrica
+SELECTCOLUMNS(                                                                                      // Función para crear columnas en una nueva tabla a partir de una tabla anterior (Files)
+    Files,                                                                                          // Esta es la tabla de la que se seleccionan las columnas
+    "Team", Files[Team 1],                                                                          // Se crea una columna Team donde se almacena el valor correspondiente al equipo local.
+    "GoalsX", VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)),   // *
+    "Index", Files[Index]                                                                           // Se trae la columna Index, que identifica unívocamente a cada partido en La Liga.
+)
+
+//* Utilizamos LEFT para extraer la parte izquierda de la columna "Score at Final Time", que corresponde a los goles del equipo local.
+// FIND("-", Files[Score at Final Time]) busca la posición del guion (-) que separa los goles.
+// Restamos 1 para excluir el guion y asegurarnos de obtener únicamente el número de goles.
+// Finalmente, VALUE convierte este texto en un número para cálculos posteriores.
+
+// Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de visitante (Team 2)
+Tabla_GolesXTeam2 = 
+SELECTCOLUMNS(
+    Files,
+    "Team", Files[Team 2],
+    "GoalsX", VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)),
+    "Index", Files[Index]
+)
+
+// Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de local (Team 1)
+Tabla_GolesYTeam1 = 
+SELECTCOLUMNS(
+    Files,
+    "Team", Files[Team 1],
+    "GoalsY", VALUE(RIGHT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)),
+    "Index", Files[Index]
+)
+
+// Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de visitante (Team 2)
+Tabla_GolesYTeam2 = 
+SELECTCOLUMNS(
+    Files,
+    "Team", Files[Team 2],
+    "GoalsY", VALUE(RIGHT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)),
+    "Index", Files[Index]  -- Agregamos la columna de Round aquí
+)
