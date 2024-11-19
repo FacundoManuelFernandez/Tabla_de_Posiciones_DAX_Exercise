@@ -8,6 +8,6 @@ La solución es crear cuatro tablas, una por cada posibilidad existente, a saber
 
 Ver fórmulas a utilizar en el script "Creación de tablas de Goles"
 
-En consecuencia, vamos a c
+Una vez fueron creadas las cuatro tablas, se crea una tabla resumen. En esta tabla ya podemos almacenar dentro de una misma columna los resultados para un equipo tanto cuando juega de local como para cuando juega de visitante.
 quipo 1 jugando de visitante
 . 3 Equipo 2 jugando de local
