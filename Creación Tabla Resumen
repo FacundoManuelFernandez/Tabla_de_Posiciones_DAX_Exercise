@@ -1,0 +1,36 @@
+// Esta tabla a priori se crea unificando las cuatro tablas de goles.
+// Luego, se pueden añadir las demás métricas (partidos jugados, puntos totales, etc.) por separado.
+// El mismo proceso que se describe para la primera tabla se aplica a las demás.
+// Las diferencias en la sintaxis para cada tabla radican en si esta almacena goles a favor o en contra y si estos corresponden al equipo local o visitante.
+
+ResumenGoles =                                           // Nombre de la nueva tabla
+UNION(                                                   // Mediante UNION se reunen las cuatro tablas de goles en la nueva tabla
+    SELECTCOLUMNS(                                       // Mediante SELECTCOLUMNS se seleccionan las columnas de las tablas de goles
+        Tabla_GolesXteam1,                               // Se aclara el nombre de la tabla de goles correspondiente
+        "Equipo", Tabla_GolesXteam1[Team],               // Se almacena el nombre del equipo en la nueva columna "Equipo"
+        "Goles a favor", INT(Tabla_GolesXteam1[GoalsX]), // Como esta tabla guarda goles a favor, se almacenan sus valores en una columna homónima. Se aplica INT para eliminar decimales
+        "Goles en contra", 0,                            // En una nueva columna de "Goles en contra" se asigna el valor "0", ya que esta tabla solo almacenaba goles a favor.
+        "Index", Tabla_GolesXteam1[Index]                // Se trae la columna de Index que identifica unívocamente a cada partido
+    ),
+    SELECTCOLUMNS(
+        Tabla_GolesXteam2, 
+        "Equipo", Tabla_GolesXteam2[Team],
+        "Goles a favor", 0,
+        "Goles en contra", INT(Tabla_GolesXteam2[GoalsX]),
+        "Index", Tabla_GolesXteam2[Index]
+    ),
+    SELECTCOLUMNS(
+        Tabla_GolesYteam1, 
+        "Equipo", Tabla_GolesYteam1[Team],
+        "Goles a favor", 0,
+        "Goles en contra", INT(Tabla_GolesYteam1[GoalsY]),
+        "Index", Tabla_GolesYteam1[Index]
+    ),
+    SELECTCOLUMNS(
+        Tabla_GolesYteam2, 
+        "Equipo", Tabla_GolesYteam2[Team],
+        "Goles a favor", INT(Tabla_GolesYteam2[GoalsY]),
+        "Goles en contra", 0,
+        "Index", Tabla_GolesYteam2[Index]
+    )
+)
