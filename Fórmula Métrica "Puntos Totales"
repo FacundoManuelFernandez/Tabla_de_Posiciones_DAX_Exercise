@@ -51,7 +51,7 @@ VAR PuntosEmpatados =                                                           
         )
     )
 
-VAR TotalPuntosGanados =                                                         // Variable para calcular puntos por victorias
+VAR TotalPuntosGanados =                                                         // Variable para calcular puntos por victorias para todos los equipos
     3 * CALCULATE(
         COUNTROWS(Files),                                                                                                      // Cuenta partidos ganados considerando múltiples equipos
         (
@@ -66,7 +66,7 @@ VAR TotalPuntosGanados =                                                        
         )
     )
 
-VAR TotalPuntosEmpatados =                                                      // Variable para calcular puntos por empates
+VAR TotalPuntosEmpatados =                                                      // Variable para calcular puntos por empates para todos los equipos
     CALCULATE(
         COUNTROWS(Files),                                                                                                      // Cuenta partidos empatados considerando múltiples equipos
         (
