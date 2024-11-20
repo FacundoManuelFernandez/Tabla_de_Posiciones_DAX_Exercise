@@ -13,6 +13,8 @@ A partir de los mismos configuramos una tabla de posiciones con los siguientes i
 7. Goles a favor
 8. Goles en contra
 
-Todas las fórmulas DAX utilizadas cuentan con comentarios que explican paso a paso cada línea de código.
-
 Tener en cuenta que la resolución de este ejercicio requiere conocimientos avanzados de DAX, correspondiendo a un nivel de seniority.
+
+En el archivo 'Proceso de resolución' está detallados los pasos necesarios para construir la tabla de posiciones. En la carpeta contigua se encuentran todas las fórmulas utilizadas en DAX.
+
+Todas las fórmulas DAX utilizadas cuentan con comentarios que explican paso a paso cada línea de código.
