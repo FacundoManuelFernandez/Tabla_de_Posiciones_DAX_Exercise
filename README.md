@@ -1,9 +1,9 @@
-En este repositorio recreamos en Power BI una tabla de posiciones (La Liga española - Temporadas de 2008-2009 a 2017-2018) tomando como referencia únicamente tres campos:
+En este repositorio recreamos en Power BI mediante DAX una tabla de posiciones (La Liga española - Temporadas de 2008-2009 a 2017-2018) tomando como referencia únicamente tres campos:
 - Equipo local
 - Resultado
 - Equipo visitante
 
-A partir de los mismos configuramos con DAX una tabla de posiciones con los siguientes indicadores:
+A partir de los mismos configuramos una tabla de posiciones con los siguientes indicadores:
 1. Puntos totales
 2. Partidos jugados
 3. Partidos ganados
