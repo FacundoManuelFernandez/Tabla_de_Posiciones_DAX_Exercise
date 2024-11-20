@@ -1,1 +1,43 @@
+// Este código consta de tres partes principales:
+// 1. Definición de PartidosPerdidosIndividual: Calcula la cantidad de partidos perdidos para un equipo específico.
+// 2. Definición de PartidosPerdidosTotal: Calcula el total de partidos perdidos por todos los equipos en la tabla (fila de "Totales")
+// 3. Resultado final: Devuelve la variable adecuada según el contexto. Si hay un equipo seleccionado, se utiliza PartidosPerdidosIndividual. Si no, se usa PartidosPerdidosTotal.
+// Este cálculo es dinámico y asegura que el valor mostrado sea acorde al nivel de granularidad del informe (equipo específico o totales de la tabla).
 
+Partidos Perdidos = 
+VAR PartidosPerdidosIndividual =                                                                                                 // Variable que calcula partidos perdidos para un equipo específico
+    CALCULATE(
+        COUNTROWS(Files),                                                                                                        // Cuenta filas que cumplen las condiciones
+        (
+            (Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                              // Si el equipo es local
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) <                                 // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))))   // Menores que goles del visitante
+        ) ||
+        (
+            Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                               // Si el equipo es visitante
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) <  // Goles del visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1))                                   // Menores que goles del local
+        )
+    )
+
+VAR PartidosPerdidosTotal =                                                                                                      // Variable que calcula el total de partidos perdidos en la tabla
+    CALCULATE(
+        COUNTROWS(Files),                                                                                                        // Cuenta filas que cumplen las condiciones
+        (
+            (Files[Team 1] IN VALUES(ResumenGoles[Equipo]) &&                                                                    // Si algún equipo es local
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) <                                 // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))))   // Menores que goles del visitante
+        ) ||
+        (
+            Files[Team 2] IN VALUES(ResumenGoles[Equipo]) &&                                                                     // Si algún equipo es visitante
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) <  // Goles del visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1))                                   // Menores que goles del local
+        )
+    )
+
+RETURN                                                                                                                        // Devuelve el resultado final
+    IF(
+        HASONEVALUE(ResumenGoles[Equipo]),                                                                                    // Si hay un equipo específico seleccionado
+        PartidosPerdidosIndividual,                                                                                           // Devuelve partidos perdidos individuales
+        PartidosPerdidosTotal                                                                                                 // Si no, devuelve el total de partidos perdidos
+    )
