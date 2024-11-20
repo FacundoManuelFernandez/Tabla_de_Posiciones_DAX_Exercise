@@ -1,4 +1,4 @@
-//Este código consta de cinco secciones principales, cada una diseñada para calcular los puntos totales de un equipo o todos los equipos, dependiendo del contexto de la visualización:
+//Este código consta de cinco secciones principales, cada una diseñada para calcular los puntos de un equipo o de todos los equipos (fila de "Totales")
 
 // 1. Cálculo de Puntos por Partidos Ganados (PuntosGanados)
 // En esta sección, se calculan los puntos obtenidos por un equipo específico al ganar partidos.
@@ -22,7 +22,7 @@
 // La última sección combina los cálculos anteriores y devuelve el total de puntos dependiendo del contexto:
 // Si solo un equipo está en el contexto (HASONEVALUE), suma PuntosGanados y PuntosEmpatados.
 // Si todos los equipos están en el contexto, utiliza TotalPuntosGanados y TotalPuntosEmpatados.
-// Esto garantiza que la medida funcione correctamente tanto en visualizaciones detalladas por equipo como en resúmenes globales.
+// Esto garantiza que la medida funcione correctamente tanto en visualizaciones detalladas por equipo como en resúmenes globales (fila de "Totales").
 
 Puntos Totales = 
 VAR PuntosGanados =                                                               // Variable que calcula puntos por victorias (3 puntos por partido ganado)
