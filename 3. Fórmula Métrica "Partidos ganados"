@@ -1,0 +1,43 @@
+// Este código consta de tres partes principales:
+// 1. Definición de PartidosGanadosIndividual: Calcula la cantidad de partidos ganados por un equipo específico, verificando las condiciones de victoria según si el equipo es local o visitante.
+// 2. Definición de PartidosGanadosTotal: Calcula el total de partidos ganados por todos los equipos en la tabla, útil en la fila de totales. Considera equipos locales y visitantes.
+// 3. Resultado final: Decide cuál de las dos variables devolver (individual o total) según el contexto.
+// El cálculo asegura que el resultado sea dinámico y se ajuste al nivel de granularidad del informe (equipo único o fila de totales).
+
+Partidos Ganados = 
+VAR PartidosGanadosIndividual =                                                                                    // Cálculo de partidos ganados por un equipo específico
+    CALCULATE(
+        COUNTROWS(Files),                                                                                          // Cuenta los partidos que cumplan las condiciones
+        (
+            (Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                             // Si el equipo es local
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) >                                // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))))  // Mayor que goles del visitante
+        ) ||                                                                                                                    // || representa el operador "OR lógico" en DAX.
+        (
+            Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                               // Si el equipo es visitante
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) >  // Goles del visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1))                                   // Mayor que goles del local
+        )
+    )
+
+VAR PartidosGanadosTotal =                                                                                         // Cálculo de partidos ganados por todos los equipos en la tabla
+    CALCULATE(
+        COUNTROWS(Files),                                                                                          // Cuenta todos los partidos ganados que cumplan las condiciones
+        (
+            (Files[Team 1] IN VALUES(ResumenGoles[Equipo]) &&                                                                   // Si el equipo es local (de entre varios)
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) >                                // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))))  // Mayor que goles del visitante
+        ) ||                                                                                                                    // || representa el operador "OR lógico" en DAX.
+        (
+            Files[Team 2] IN VALUES(ResumenGoles[Equipo]) &&                                                                    // Si el equipo es visitante (de entre varios)
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) > // Goles del visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1))                                  // Mayor que goles del local
+        )
+    )
+
+RETURN                                                                                                             // Devuelve el valor según el contexto: equipo único o total general
+    IF(
+        HASONEVALUE(ResumenGoles[Equipo]),                                                                         // Si está filtrado por un solo equipo
+        PartidosGanadosIndividual,                                                                                 // Devuelve los partidos ganados por ese equipo
+        PartidosGanadosTotal                                                                                       // Devuelve el total de partidos ganados por todos los equipos
+    )
