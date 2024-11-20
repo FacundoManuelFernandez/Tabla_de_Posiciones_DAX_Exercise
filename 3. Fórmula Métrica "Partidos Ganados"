@@ -12,7 +12,7 @@ VAR PartidosGanadosIndividual =                                                 
             (Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                             // Si el equipo es local
             VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) >                                // Goles del local
             VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))))  // Mayor que goles del visitante
-        ) ||                                                                                                                    // || representa el operador "OR lógico" en DAX.
+        ) ||                                                                                                                    // || representa el operador lógico "OR" en DAX.
         (
             Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                               // Si el equipo es visitante
             VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) >  // Goles del visitante
@@ -27,7 +27,7 @@ VAR PartidosGanadosTotal =                                                      
             (Files[Team 1] IN VALUES(ResumenGoles[Equipo]) &&                                                                   // Si el equipo es local (de entre varios)
             VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) >                                // Goles del local
             VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))))  // Mayor que goles del visitante
-        ) ||                                                                                                                    // || representa el operador "OR lógico" en DAX.
+        ) ||                                                                                                                    // || representa el operador lógico "OR" en DAX.
         (
             Files[Team 2] IN VALUES(ResumenGoles[Equipo]) &&                                                                    // Si el equipo es visitante (de entre varios)
             VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) > // Goles del visitante
