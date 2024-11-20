@@ -25,7 +25,7 @@ Cada una de estas tablas debería contener tres columnas, a saber:
 2. Goles (a favor o en contra dependiendo de la tabla)
 3. Index (ID del partido)
 
-Ver fórmulas a utilizar en el script "Creación de Tablas de Goles"
+Ver fórmulas a utilizar en el script "Fórmula Tablas de Goles"
 
 Una vez generadas las cuatro tablas individuales, el siguiente paso es consolidar toda esta información en una tabla resumen. Esta nueva tabla unifica en una misma columna el nombre de los equipos (cuyos valores originalmente estaban distribuidos entre las columnas "Equipo Local" y "Equipo visitante") y, además, permite crear las dos columnas que estábamos buscando: "Goles a favor" y "Goles en contra".
 
@@ -36,7 +36,7 @@ Como resultado, esta tabla resumen contiene cuatro columnas, a saber:
 3. Goles en contra (almacena los goles de las tablas "GolesYTeam1" y "GolesXTeam2")
 4. Index (ID del partido)
 
-Ver fórmulas a utilizar en el script "Creación Tabla Resumen"
+Ver fórmulas a utilizar en el script "Fórmula Tabla Resumen (Métricas de "Goles a favor" y "Goles en contra")"
 
 Ahora ya podemos crear sobre esta tabla resumen, que tiene una columna unificada de equipo, las demás métricas sin inconveniente alguno.
 
