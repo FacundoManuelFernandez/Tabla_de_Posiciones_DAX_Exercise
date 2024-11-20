@@ -1,1 +1,25 @@
+// Este código calcula la cantidad de partidos jugados. 
+// Si se analiza un solo equipo (VAR PartidosIndividuales), devuelve los partidos jugados específicamente por ese equipo, ya sea como local o visitante.
+// Si se analiza un grupo de equipos (VAR PartidosTotales), devuelve la suma total de partidos jugados por todos ellos.
 
+Partidos Jugados = 
+VAR PartidosIndividuales =                                              // Variable que cuenta los partidos jugados por un equipo específico
+    CALCULATE(
+        COUNTROWS(Files),                                               // Cuenta las filas (partidos) en la tabla
+        Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) ||          // Si el equipo seleccionado jugó como local
+        Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo])             // O si el equipo seleccionado jugó como visitante
+    )
+
+VAR PartidosTotales =                                                  // Variable que cuenta los partidos jugados por todos los equipos
+    CALCULATE(
+        COUNTROWS(Files),                                              // Cuenta las filas (partidos) en la tabla
+        Files[Team 1] IN VALUES(ResumenGoles[Equipo]) ||               // Si el equipo local está en la lista de equipos
+        Files[Team 2] IN VALUES(ResumenGoles[Equipo])                  // O si el equipo visitante está en la lista de equipos
+    )
+
+RETURN
+    IF(                                                                // Devuelve el número de partidos jugados basado en el contexto
+        HASONEVALUE(ResumenGoles[Equipo]),                             // Si el contexto actual tiene un único equipo
+        PartidosIndividuales,                                          // Devuelve los partidos jugados por ese equipo
+        PartidosTotales                                                // Si no, devuelve los partidos jugados por todos los equipos
+    )
