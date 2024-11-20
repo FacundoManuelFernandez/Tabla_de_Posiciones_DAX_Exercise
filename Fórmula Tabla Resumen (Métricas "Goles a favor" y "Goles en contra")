@@ -1,4 +1,5 @@
-// Esta tabla a priori se crea unificando las cuatro tablas de goles.
+// Esta tabla se crea unificando las cuatro tablas de goles.
+// Las métricas "Goles a favor" y "Goles en contra" se formulan directamente mediante la creación de esta tabla.
 // Luego, se pueden añadir las demás métricas (partidos jugados, puntos totales, etc.) por separado.
 // El mismo proceso que se describe para la primera tabla se aplica a las demás.
 // Las diferencias en la sintaxis para cada tabla radican en si esta almacena goles a favor o en contra y si estos corresponden al equipo local o visitante.
