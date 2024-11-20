@@ -3,7 +3,7 @@ En este repositorio recreamos en Power BI una tabla de posiciones (La Liga espa√
 - Resultado
 - Equipo visitante
 
-A partir de los mismos configuramos una tabla de posiciones con los siguientes indicadores:
+A partir de los mismos configuramos con DAX una tabla de posiciones con los siguientes indicadores:
 1. Puntos totales
 2. Partidos jugados
 3. Partidos ganados
