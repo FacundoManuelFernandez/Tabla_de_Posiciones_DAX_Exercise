@@ -1,14 +1,11 @@
-Lo primero a realizar es decir, no podemos crear desde DAX esto es así básicamente porque a una misma variable.
+Tenemos a priori tres columnas:
+- Equipo local
+- Resultado (en formato "X-Y", donde X son los goles marcados por el equipo local e Y los goles del equipo visitante)
+- Equipo visitante
 
+Por ronda cada equipo puede jugar de local o de visitante. Es decir, en algunas rondas figura en la columna "Equipo Local" y en otras figura en la columna "Equipo Visitante". No puede jugar bajo ambas condiciones en una misma ronda. A su vez, el equipo puede recibir o marcar goles jugando de local y recibir o marcar goles jugando de visitante.
 
-Cada equipo puede jugar de local o de visitante. Es decir, en unas rondas figura en la columna "Equipo Local" y en otras figura en la columna "Equipo Visitante". A su vez, el equipo puede recibir o marcar goles jugando de local y recibir o marcar goles jugando de visitante.
-
-
-Cada temporada (anual) tiene 38 partidos (son 20 equipos en total, y 19 partidos por semestra).
-Es decir, cada round cada equipo juega de local o de visitante, no puede jugar bajo ambas condiciones al mismo tiempo. Es decir, que 
-
-
-En DAX, no es posible directamente descomponer una columna de resultados en formato "X-Y" (por ejemplo, "2-1", "2-3") en dos columnas que unifiquen los goles a favor y en contra de un equipo en una misma tabla. Esto se debe a la estructura del modelo de datos.
+El desafío de este ejercicio radica en que, mediante DAX, no es posible directamente descomponer una columna de resultados en formato "X-Y" (por ejemplo, "2-1", "2-3") en dos columnas que unifiquen los goles a favor y en contra de un equipo en una misma tabla. Esto se debe a la estructura del modelo de datos.
 
 Por un lado, está la doble representación de equipos: Cada equipo puede aparecer en dos columnas diferentes: como equipo local (Team 1) o como equipo visitante (Team 2). Dependiendo del partido, los goles marcados y recibidos por un equipo pueden encontrarse en diferentes posiciones dentro del resultado.
 
@@ -30,7 +27,7 @@ Cada una de estas tablas debería contener tres columnas, a saber:
 
 Ver fórmulas a utilizar en el script "Creación de Tablas de Goles"
 
-Una vez generadas las cuatro tablas individuales, el siguiente paso es consolidar toda esta información en una tabla resumen. Esta nueva tabla unifica en una misma columna el nombre de los equipos (cuyos valores originalmente estaban distribuidos entre las columnas "Equipo Local" y "Equipo visitante") y, además, permite crear las dos columnas que estabamos buscando: "Goles a favor" y "Goles en contra".
+Una vez generadas las cuatro tablas individuales, el siguiente paso es consolidar toda esta información en una tabla resumen. Esta nueva tabla unifica en una misma columna el nombre de los equipos (cuyos valores originalmente estaban distribuidos entre las columnas "Equipo Local" y "Equipo visitante") y, además, permite crear las dos columnas que estábamos buscando: "Goles a favor" y "Goles en contra".
 
 Como resultado, esta tabla resumen contiene cuatro columnas, a saber:
 
@@ -43,13 +40,10 @@ Ver fórmulas a utilizar en el script "Creación Tabla Resumen"
 
 Ahora ya podemos crear sobre esta tabla resumen, que tiene una columna unificada de equipo, las demás métricas sin inconveniente alguno.
 
-Ver fórmulas a utilizar en los scripts:
-
+Ver fórmulas a utilizar en los siguientes scripts:
 1. Fórmula Métrica "Puntos totales"
 2. Fórmula Métrica "Partidos jugados"
 3. Fórmula Métrica "Partidos ganados"
 4. Fórmula Métrica "Partidos empatados"
 5. Fórmula Métrica "Partidos perdidos"
 6. Fórmula Métrica "Win Rate (%)"
-7. Fórmula Métrica "Goles a favor"
-8. Fórmula Métrica "Goles en contra"
