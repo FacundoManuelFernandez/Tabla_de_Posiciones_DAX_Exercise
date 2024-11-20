@@ -1,0 +1,42 @@
+// Este código consta de cuatro partes principales:
+// 1. Definición de PartidosGanadosIndividual: Calcula la cantidad de partidos ganados por un equipo específico. 
+// 2. Definición de PartidosJugadosIndividual: Calcula el total de partidos jugados por un equipo específico.
+// 3. Cálculo del Win Rate: Calcula el porcentaje de partidos ganados, dividiendo la cantidad de partidos ganados entre los partidos jugados. Si no hay partidos jugados, el resultado es BLANK().
+// 4. Resultado final: Devuelve el Win Rate formateado como un porcentaje si no es BLANK(). Si es BLANK(), retorna BLANK().
+
+Win Rate (%) = 
+VAR PartidosGanadosIndividual =                                                                                             // Variable que calcula los partidos ganados por un equipo específico
+    CALCULATE(
+        COUNTROWS(Files),                                                                                                     // Cuenta las filas en 'Files' que cumplen las condiciones de victoria
+        (
+            (Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                           // Si el equipo es local
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1)) >                              // Goles del local
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time])))) // Menores que goles del visitante
+        ) ||
+        (
+            Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo]) &&                                                           // Si el equipo es visitante
+            VALUE(RIGHT(Files[Score at Final Time], LEN(Files[Score at Final Time]) - FIND("-", Files[Score at Final Time]))) > // Goles del visitante
+            VALUE(LEFT(Files[Score at Final Time], FIND("-", Files[Score at Final Time]) - 1))                                  // Menores que goles del local
+        )
+    )
+
+VAR PartidosJugadosIndividual =                                                                                             // Variable que calcula la cantidad de partidos jugados por un equipo específico
+    CALCULATE(
+        COUNTROWS(Files),                                                                                                     // Cuenta filas en 'Files' donde el equipo es local o visitante
+        Files[Team 1] = SELECTEDVALUE(ResumenGoles[Equipo]) ||                                                                 // Si el equipo es local o visitante
+        Files[Team 2] = SELECTEDVALUE(ResumenGoles[Equipo])
+    )
+
+VAR WinRate =                                                                                                               // Cálculo del porcentaje de victorias (Win Rate)
+    IF(
+        PartidosJugadosIndividual > 0,                                                                                         // Si hay partidos jugados
+        DIVIDE(PartidosGanadosIndividual, PartidosJugadosIndividual),                                                           // Divide victorias entre partidos jugados
+        BLANK()                                                                                                               // Si no hay partidos jugados, devuelve BLANK()
+    )
+
+RETURN                                                                                                                        // Devuelve el resultado final
+    IF(
+        NOT(ISBLANK(WinRate)),                                                                                               // Si el WinRate no es BLANK()
+        FORMAT(WinRate, "0%"),                                                                                               // Formatea como porcentaje
+        BLANK()                                                                                                               // Si es BLANK(), devuelve BLANK()
+    )
