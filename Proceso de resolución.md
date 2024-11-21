@@ -41,9 +41,15 @@ En el script '2. Fórmula Tabla Resumen (Métricas "Goles a favor" y "Goles en c
 Ahora ya podemos crear sobre esta tabla resumen, con una columna unificada de equipo, las demás métricas sin inconveniente alguno.
 
 En los siguientes scripts se encuentran las fórmulas a utilizar:
+
 3. Fórmula Métrica "Puntos totales"
+ 
 4. Fórmula Métrica "Partidos jugados"
+    
 5. Fórmula Métrica "Partidos ganados"
+ 
 6. Fórmula Métrica "Partidos empatados"
+ 
 7. Fórmula Métrica "Partidos perdidos"
+ 
 8. Fórmula Métrica "Win Rate (%)"
