@@ -18,7 +18,7 @@ Es necesario, entonces, crear cuatro tablas, una por cada posibilidad existente:
 1. Goles a favor del equipo jugando de local (GolesXTeam1)
 2. Goles en contra del equipo jugando de local (GolesYTeam1)
 3. Goles a favor del equipo jugando de visitante (GolesYTeam2)
-4. Goles en contra del equipo jugando de visitante(GolesXTeam2)
+4. Goles en contra del equipo jugando de visitante (GolesXTeam2)
 
 Cada una de estas tablas debería contener tres columnas, a saber:
 1. Equipo (nombre del equipo)
