@@ -1,3 +1,5 @@
+Paso 1: Planteo del desafío 
+
 Tenemos a priori tres columnas:
 - Equipo local
 - Resultado (en formato "X-Y", donde X son los goles marcados por el equipo local e Y los goles del equipo visitante)
@@ -13,6 +15,8 @@ Por otro lado, está la alternancia entre local y visitante: Para un equipo que 
 
 Debido a que los goles de un equipo dependen de su rol (local o visitante) y se distribuyen entre dos campos distintos, no se pueden consolidar en una sola operación de DAX dentro de una única tabla. Sería imposible su unificación directa.
 
+Paso 2: Construcción de tablas auxiliares
+
 Es necesario, entonces, crear cuatro tablas, una por cada posibilidad existente:
 
 1. Goles a favor del equipo jugando de local (GolesXTeam1)
@@ -23,9 +27,13 @@ Es necesario, entonces, crear cuatro tablas, una por cada posibilidad existente:
 Cada una de estas tablas debería contener tres columnas, a saber:
 1. Equipo (nombre del equipo)
 2. Goles (a favor o en contra dependiendo de la tabla)
-3. Index (ID del partido)
+3. Index (ID del partido)*
 
-En el script '1. Fórmula Tablas de Goles' se encuentran las fórmulas a utilizar a tal fin.
+* Para este ejercicio demostrativo no es necesario contar con una columna 'Index', pero puede resultar particularmente útil si tenemos un modelo de datos más desarollado para relacionar las tablas.
+
+En el script '1. Fórmula Tablas de Goles' se encuentran las fórmulas a utilizar para construir las tablas auxiliares.
+
+Paso 3: Construcción de la tabla resumen
 
 Una vez generadas las cuatro tablas individuales, el siguiente paso es consolidar toda esta información en una tabla resumen. Esta nueva tabla unifica en una misma columna el nombre de los equipos (cuyos valores originalmente estaban distribuidos entre las columnas "Equipo Local" y "Equipo visitante") y, además, permite crear las dos columnas que estábamos buscando: "Goles a favor" y "Goles en contra".
 
@@ -37,6 +45,8 @@ Como resultado, esta tabla resumen contiene cuatro columnas, a saber:
 4. Index (ID del partido)
 
 En el script '2. Fórmula Tabla Resumen (Métricas "Goles a favor" y "Goles en contra")' se encuentran las fórmulas a utilizar a tal fin.
+
+Paso 4. Creación de métricas
 
 Ahora ya podemos crear sobre esta tabla resumen, con una columna unificada de equipo, las demás métricas sin inconveniente alguno.
 
