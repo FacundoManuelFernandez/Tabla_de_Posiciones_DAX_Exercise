@@ -2,7 +2,7 @@
 // Por ejemplo, si un partido terminó "2-1", GolesX representa la primera parte del resultado (2) y GolesY, la segunda (1).
 // De igual modo, tomar Team1 como equipo local y Team2 como equipo visitante.
 
-// Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de local (Team 1)
+// Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de local (Team 1):
 
 Tabla_GolesXTeam1 =                                                                                 // Nombre de la métrica
 SELECTCOLUMNS(                                                                                      // Función para crear columnas en una nueva tabla a partir de una tabla anterior (Files)
@@ -17,7 +17,7 @@ SELECTCOLUMNS(                                                                  
 // Restamos 1 para excluir el guion y asegurarnos de obtener únicamente el número de goles.
 // Finalmente, VALUE convierte este texto en un número para cálculos posteriores.
 
-// Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de visitante (Team 2)
+// Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de visitante (Team 2):
 
 Tabla_GolesXTeam2 = 
 SELECTCOLUMNS(
@@ -27,7 +27,7 @@ SELECTCOLUMNS(
     "Index", Files[Index]
 )
 
-// Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de local (Team 1)
+// Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de local (Team 1):
 
 Tabla_GolesYTeam1 = 
 SELECTCOLUMNS(
@@ -37,7 +37,7 @@ SELECTCOLUMNS(
     "Index", Files[Index]
 )
 
-// Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de visitante (Team 2)
+// Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de visitante (Team 2):
 
 Tabla_GolesYTeam2 = 
 SELECTCOLUMNS(
