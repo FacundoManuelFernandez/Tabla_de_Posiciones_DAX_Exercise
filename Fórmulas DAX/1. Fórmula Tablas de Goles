@@ -3,6 +3,7 @@
 // De igual modo, tomar Team1 como equipo local y Team2 como equipo visitante.
 
 // Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de local (Team 1)
+
 Tabla_GolesXTeam1 =                                                                                 // Nombre de la métrica
 SELECTCOLUMNS(                                                                                      // Función para crear columnas en una nueva tabla a partir de una tabla anterior (Files)
     Files,                                                                                          // Esta es la tabla de la que se seleccionan las columnas
@@ -17,6 +18,7 @@ SELECTCOLUMNS(                                                                  
 // Finalmente, VALUE convierte este texto en un número para cálculos posteriores.
 
 // Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de visitante (Team 2)
+
 Tabla_GolesXTeam2 = 
 SELECTCOLUMNS(
     Files,
@@ -26,6 +28,7 @@ SELECTCOLUMNS(
 )
 
 // Mediante esta fórmula creamos la tabla correspondiente a los goles en contra de un equipo cuando juega de local (Team 1)
+
 Tabla_GolesYTeam1 = 
 SELECTCOLUMNS(
     Files,
@@ -35,6 +38,7 @@ SELECTCOLUMNS(
 )
 
 // Mediante esta fórmula creamos la tabla correspondiente a los goles a favor de un equipo cuando juega de visitante (Team 2)
+
 Tabla_GolesYTeam2 = 
 SELECTCOLUMNS(
     Files,
