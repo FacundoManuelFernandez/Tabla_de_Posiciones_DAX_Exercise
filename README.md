@@ -25,4 +25,4 @@ Dentro del repositorio se encuentra el siguiente contenido:
 
 Si bien tomamos como ejemplo para el ejercicio los resultados de la Liga Española - Temporada 2017-2018, las fórmulas pueden utilizarse para implementar cualquier tipo de tabla de posiciones, siempre que se cuente con los tres campos indicados: equipo local, resultado del partido (al estilo "X-Y", donde X son los goles del equipo local e Y los del visitante) y equipo visitante.
 
-Si tienes alguna consulta o acotación no dudes en hacermela saber!
+Si tienes alguna consulta o acotación no dudes en hacérmela saber!
