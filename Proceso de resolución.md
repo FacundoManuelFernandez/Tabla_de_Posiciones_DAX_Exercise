@@ -29,7 +29,7 @@ Cada una de estas tablas debería contener tres columnas, a saber:
 2. Goles (a favor o en contra dependiendo de la tabla)
 3. Index (ID del partido)*
 
-* Para este ejercicio demostrativo no es necesario contar con una columna 'Index', pero puede resultar particularmente útil si tenemos un modelo de datos más desarollado para relacionar las tablas.
+ * Para este ejercicio demostrativo no es necesario contar con una columna 'Index', pero puede resultar particularmente útil si tenemos un modelo de datos más desarollado para relacionar las tablas.
 
 En el script '1. Fórmula Tablas de Goles' se encuentran las fórmulas a utilizar para construir las tablas auxiliares.
 
